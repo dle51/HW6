@@ -1,7 +1,7 @@
 
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   Dan Le - Section 001
  *
  *   Note, additional comments provided throughout this source code
  *   is for educational purposes
@@ -48,7 +48,7 @@ import java.util.Comparator;
  *
  * int size()           - Returns the number of elements in the queue
  * boolean isEmpty()    - Returns true if this collection contains no elements.
- * void clear()         - Removes all of the elements from this priority queue.
+ * void clear()         - Removes all the elements from this priority queue.
  * Node peek()          - Retrieves, but does not remove, the head of this queue, or
  *                        returns null if this queue is empty.
  * Node add(E,P)        - Inserts the specified element into this priority queue.
@@ -151,8 +151,12 @@ class PriorityQueue<E, P> {
 
     public Node add(E e, P priority) {
 
-        // YOUR CODE GOES HERE
-        return null;
+        Node node = new Node(e, priority, tree.size());
+        tree.add(node);
+        pullUp(node.idx);
+
+        return node;
+
     }
 
 
@@ -168,8 +172,16 @@ class PriorityQueue<E, P> {
 
     public boolean contains(E e) {
 
-        // ADD YOUR CODE HERE
+        for (Node node : tree) {
+
+            if (node.value.equals(e)) {
+                return true;
+            }
+
+        }
+
         return false;
+
     }
 
 

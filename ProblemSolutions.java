@@ -1,7 +1,7 @@
 
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   Dan Le - Section 001
  *
  *   This java file contains the problem solutions for the methods lastBoulder,
  *   showDuplicates, and pair methods. You should utilize the Java Collection
@@ -68,7 +68,29 @@ public class ProblemSolutions {
       //
       // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME / SECTION # ABOVE
       //
-      return -1;
+
+      PriorityQueue<Integer> rocks = new PriorityQueue<>(Comparator.reverseOrder());
+      for (int i : boulders) {
+          rocks.add(i);
+      }
+      while (rocks.size() > 1) {
+          int rock1 = rocks.remove();
+          int rock2 = rocks.remove();
+          if (rock1 != rock2) {
+              if (rock1 > rock2) {
+                  rocks.add(rock1-rock2);
+              } else {
+                  rocks.add(rock2-rock1);
+              }
+          }
+      }
+
+      if (rocks.isEmpty()) {
+          return 0;
+      } else {
+          return rocks.peek();
+      }
+
   }
 
 
@@ -91,10 +113,22 @@ public class ProblemSolutions {
 
     public static ArrayList<String> showDuplicates(ArrayList<String> input) {
 
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure result is sorted in ascending order
+        PriorityQueue<String> pQueue = new PriorityQueue<>();
+        Set<String> seen = new HashSet<>();
+
+        for (String word : input) {
+
+            if (seen.contains(word)) {
+                if (!pQueue.contains(word)) {
+                    pQueue.add(word);
+                }
+            } else {
+                seen.add(word);
+            }
+
+        }
+
+        return new ArrayList<>(pQueue);
 
     }
 
@@ -131,9 +165,21 @@ public class ProblemSolutions {
 
     public static ArrayList<String> pair(int[] input, int k) {
 
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure returned lists is sorted as indicated above
+        Set<Integer> numbers = new HashSet<>();
+        List<String> list = new ArrayList<>();
+
+        for (int number : input) {
+            if (numbers.contains(number)) {
+                continue;
+            }
+            numbers.add(number);
+            int target = k - number;
+            if (numbers.contains(target)) {
+                String x = "(" + (k - number) + ", " + number + ")";
+                list.add(x);
+            }
+        }
+        PriorityQueue<String> end = new PriorityQueue<>(list);
+        return new ArrayList<>(end);
     }
 }
